@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="downloadpackage" extends="default" >
+		<action name="listDownload" class="downloadChannle" method="listDownload">
+			<result>/downloadChannel/download.jsp</result>
+		</action> 
+		<action name="queryDownloadById" class="downloadChannle" method="queryDownloadById">
+			<result>/downloadChannel/downloadContent.jsp</result>
+		</action>
+		<action name="queryDownloadListByModuleId" class="downloadChannle" method="queryDownloadListByModuleId">
+			<result>/downloadChannel/downloadList.jsp</result>
+		</action>
+	</package>
+</struts>

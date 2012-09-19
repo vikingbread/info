@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="NewsDo">
+    <typeAlias alias="newsDo" type="com.jiankong.admin.domain.NewsDo"/>
+	<resultMap id="news_result" class="newsDo">
+		<result property="id" column="id" jdbcType="int" />
+		<result property="createAuthor" column="create_author" jdbcType="string" />
+		<result property="modifyAuthor" column="modify_author" jdbcType="string" />
+		<result property="title" column="title" jdbcType="String" />
+		<result property="content" column="content" jdbcType="String" />
+		<result property="feature" column="feature" jdbcType="String" />
+		<result property="createGmt" column="create_gmt" jdbcType="Date" />
+		<result property="modifyGmt" column="modify_gmt" jdbcType="Date" />
+		<result property="imgUrl" column="img_url" jdbcType="String" />
+		<result property="viewtime" column="viewtime" jdbcType="int" />
+		<result property="status" column="status" jdbcType="int" />
+	</resultMap>
+	
+	<sql id="all_news_column">
+	id,create_author,modify_author,title,content,feature,create_gmt,modify_gmt,img_url,viewtime,status
+	</sql>
+	
+	<select id="News.getNewsById" parameterClass="java.lang.Long" resultMap="news_result">
+	select <include refid="all_news_column" /> from news where id = #id# and status = 1
+	
+	</select>
+	
+	<insert id="News.insertNews" parameterClass="newsDo">
+	insert into news values(null,#createAuthor#,'',#title#,#content#,#feature#,now(),null,#imgUrl#,default,default)
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+		select max(id) from news
+		</selectKey> 
+	</insert> 
+	
+	<update id="News.deleteNews" parameterClass="java.lang.Long">
+	update news set status = 0 where id = #id#
+	
+	</update>
+	
+	<update id="News.updateNews" parameterClass="newsDo" >
+	update news set modify_author=#modifyAuthor#,title=#title#,content=#content#,feature=#feature#,modify_gmt=now(),img_url=#imgUrl# where id=#id#
+	</update>
+	
+	<select id="News.getAllRecord" resultClass = "java.lang.Integer">
+	select count(*) from news where status = 1 
+	</select>
+	
+	<select id="News.queryNewsListByNewsIds" resultMap="news_result">
+   
+   select <include refid = "all_news_column" /> from news
+   where  status = 1 and
+			id in 
+			<iterate property="newsIdList"  open="(" close=")"  conjunction=",">
+    					#newsIdList[]#   
+	    	</iterate>
+	</select>
+	
+	<select id="News.queryNewsList" resultMap="news_result">
+	select <include refid = "all_news_column" /> from news where status =1 order by id desc
+	</select>
+	
+	<update id="News.addViewTimes" parameterClass="java.lang.Long">
+		update news set viewtime =viewtime+1 where id = #id#
+	</update>
+	
+</sqlMap>

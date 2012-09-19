@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="ChannelModuleDo">
+<typeAlias alias="channelModuleDo" type="com.jiankong.admin.domain.ChannelModuleDo" />
+    <resultMap class="channelModuleDo" id="channelModule_result">
+      <result property="id" column="id" jdbcType="int" />
+      <result property="channel_id" column="channel_id" jdbcType="int" />
+      <result property="module_id" column="module_id" jdbcType="int" />
+    </resultMap>
+	<sql id="all_channelModule_column">
+	id,channel_id,module_id
+	</sql>
+
+	
+	<select id="ChannelModule.queryModuleIdByChannelId" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+	  select module_id from channel_module where channel_id = #channel_id#
+	</select>
+	
+	<select id="ChannelModule.queryChannelModuleListByModuleIdList"  resultClass="channelModuleDo">
+	  select <include refid="all_channelModule_column"/> from channel_module where module_id 
+	  in 
+			<iterate property="moduleIdList"  open="(" close=")"  conjunction=",">
+    					#moduleIdList[]#   
+	    	</iterate>
+	</select>
+	
+	
+	<insert id="ChannelModule.insertChannelModule" parameterClass="channelModuleDo">
+	  insert into channel_module values(null,#channel_id#,#module_id#)
+	  
+	  <selectKey resultClass="java.lang.Integer" keyProperty="id">
+		select max(id) from channel_module
+		</selectKey>
+	</insert>
+	
+	<delete id="ChannelModule.delteChannelModule" parameterClass="java.lang.Integer">
+      delete from channel_module where id = #id#	
+	</delete>
+
+	<insert id="ChannelModule.insertChannelModules" parameterClass="java.util.List">  
+        <![CDATA[ 
+            insert into channel_module(id, channel_id, module_id) values 
+        ]]>  
+        <iterate conjunction=",">  
+            <![CDATA[ 
+                (#channelModules[].id#, #channelModules[].channel_id#, #channelModules[].module_id#) 
+            ]]>  
+        </iterate>  
+        <!--
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">
+		select max(id) from channel_module
+		</selectKey> 
+	  -->
+		
+    </insert>  
+    
+    <delete id="ChannelModule.deleteChannelModuleByModuleId" parameterClass="java.lang.Integer">
+      delete from channel_module where module_id = #module_id#     
+    </delete>
+    
+    <select id="ChannelModule.getModuleCountByChannelId" resultClass="java.lang.Integer">
+	select count(*) from channel_module where channel_id = #channel_id#
+	</select>
+	
+</sqlMap>

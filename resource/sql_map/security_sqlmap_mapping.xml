@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="loginRecord">
+	<typeAlias alias="authority" type="com.info.pojo.Authority" />
+	<typeAlias alias="user" type="com.info.pojo.User"/>
+	<resultMap class="user" id="users">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="passwd" column="passwd"/>
+		<result property="enabled" column="enabled"/>
+		<result property="authorities" column="name" select="authoritiesByUsernameQuery"/>
+	</resultMap>
+	
+
+	<select id="authoritiesByUsernameQuery" parameterClass="String"  resultClass="authority">
+		select name,authority from authorities where name = #name#
+	</select>
+	
+	<select id="usersByUsernameQuery" parameterClass="String" resultMap="users">
+		select id,name,passwd,enabled from users where name = #name#
+	</select>
+	
+</sqlMap>

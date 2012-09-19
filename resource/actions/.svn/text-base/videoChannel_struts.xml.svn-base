@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="videopackage" extends="default" >
+		<action name="listVideo" class="videoChannle" method="listVideo">
+			<result>/videoChannel/videoIndex.jsp</result>
+		</action> 
+		<action name="queryVideoById" class="videoChannle" method="queryVideoById">
+			<result>/videoChannel/videoContent.jsp</result>
+		</action>
+		<action name="queryVideoListByModuleId" class="videoChannle" method="queryVideoListByModuleId">
+			<result>/videoChannel/videoList.jsp</result>
+		</action>
+	</package>
+</struts>
