@@ -13,21 +13,23 @@ import com.sun.jmx.snmp.Timestamp;
 
 /**
  * @author Viking
- * @version ´´½¨Ê±¼ä£º2012-9-15 ÏÂÎç06:29:31  <p>¼ÇÂ¼ÏÂÎ»»úÌá½»µÄ¿¨ºÅ ¶¨Ê±É¾³ý¹ýÆÚ¼ÇÂ¼
+ * @version ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2012-9-15 ï¿½ï¿½ï¿½ï¿½06:29:31  <p>ï¿½ï¿½Â¼ï¿½ï¿½Î»ï¿½ï¿½ï¿½á½»ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ê±É¾ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½Â¼
  */
 public class IDCache implements Runnable {
 	private static Log logger = LogFactory.getLog(IDCache.class);
-	private static final int TIME_OUT = 5 * 60 * 1000;// µ¥Î»ÎªºÁÃë
+	private static final int TIME_OUT = 5 * 60 * 1000;// ï¿½ï¿½Î»Îªï¿½ï¿½ï¿½ï¿½
 	private final Map<String, IDInfo> cache = new HashMap<String, IDInfo>();
 	private final static IDCache ID_RE_CACHE = new IDCache();
-	static {//²âÊÔÓÃ
+	static {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		IDInfo idInfo = new IDInfo();
 		idInfo.setIDNummber(12345678);
 		idInfo.setIp("127.0.0.1");
 		idInfo.setTimeStamp(System.currentTimeMillis());
 		ID_RE_CACHE.save("127.0.0.1", idInfo);
 	}
-	
+        public IDCache(){	
+        }
+
 	public static IDCache getCache(){
 		return ID_RE_CACHE;
 	}
@@ -36,7 +38,7 @@ public class IDCache implements Runnable {
 		synchronized (cache) {
 			cache.put(ip, idInfo);
 		}
-		logger.info("ÓÐÐÂµÄ¿¨ºÅ±»Ìá½»¡£À´ÖÁÖ÷»ú:"+ip);
+		logger.info("ï¿½ï¿½ï¿½ÂµÄ¿ï¿½ï¿½Å±ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:"+ip);
 	}
 
 	public IDInfo getInfo(String ip) {
@@ -53,7 +55,7 @@ public class IDCache implements Runnable {
 		Iterator<Entry<String, IDInfo>> iterator;
 		IDInfo idInfo;
 		while (true) {
-			System.out.println("´¦ÀíÏß³Ì");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½");
 			current = System.currentTimeMillis();
 			synchronized (cache) {
 				iterator = cache.entrySet().iterator();
