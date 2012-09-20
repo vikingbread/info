@@ -28,10 +28,6 @@ public class IDCache implements Runnable {
 		ID_RE_CACHE.save("127.0.0.1", idInfo);
 	}
 
-        private IDCache(){
-
-        }
-	
 	public static IDCache getCache(){
 		return ID_RE_CACHE;
 	}
@@ -47,7 +43,7 @@ public class IDCache implements Runnable {
 		return cache.get(ip);
 	}
 
-	public IDCache() {
+	private IDCache() {
 		new Thread(this).start();
 	}
 
