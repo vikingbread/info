@@ -1,0 +1,10 @@
+form label.error { 
+		
+		padding-left: 16px; 
+		
+		margin-left: 2px; 
+		
+		color:red; 
+		
+	/*	background: url('images/unchecked.gif') no-repeat ;*/
+} 

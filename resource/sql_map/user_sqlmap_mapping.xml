@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="User">
+	<typeAlias alias="user" type="com.info.pojo.User" /><!--
+	<typeAlias alias="authority" type="com.info.pojo.Authority" />
+	<parameterMap class="user" id="users">
+		<parameter property="id"/>
+		<parameter property="name"/>
+		<parameter property="sex"/>
+		<parameter property="passwd"/>
+		<parameter property="sclass"/>
+		<parameter property="sno"/>
+		<parameter property="email"/>
+		<parameter property="balance"/>
+	</parameterMap>-->
+	<select id="user.getUserCount" resultClass="int">
+		select count(*) from users 
+	</select>
+	<select id="user.queryAllUsersByPage" 	resultClass="user">
+		select id,name,sclass,sno,createtime,email,balance,recentlyLoginIp,enabled
+		from users order by createtime desc
+	</select>
+	<select id="user.queryUserByNameAndPasswd"	resultClass="user">
+		select id,name,sclass,sno,createtime,email,balance,recentlyLoginIp,recentlyLoginTime,enabled
+		from users where name=#name# and passwd=#passwd#
+	</select>
+	<insert id="user.addUser" parameterClass="user">
+		INSERT INTO users
+		(id,name,sex,passwd,sclass,sno,email,createtime,balance,recentlyLoginIp)
+		VALUES
+		(#id#,#name#,#sex#,#passwd#,#sclass#,#sno#,#email#,now(),#balance#,'')
+	</insert>
+	<insert id="user.addAuthorities" parameterClass="user">
+		INSERT INTO
+		authorities
+		(name,AUTHORITY) VALUES
+		(#name#,#authority#)
+	</insert>
+	<select id="user.queryBalanceById" parameterClass="long"
+		resultClass="float">
+		select balance from users where id=#id#
+	</select>
+	
+	<select id="user.queryUserByName" parameterClass="String"
+		resultClass="user">
+		select
+		id,name,passwd,balance,recentlyLoginTime,recentlyLoginIp
+		from users
+		where name like #name#
+	</select>
+	<select id="user.queryUserById" parameterClass="long"
+		resultClass="user">
+		select
+		id,name,passwd,balance,recentlyLoginTime,recentlyLoginIp,sclass,sno,email,sex
+		from
+		users where id = #id#
+	</select>
+	<select id="user.queryUserAuthority" parameterClass="String"
+		resultClass="String">
+		select authority from authorities where name = #name#
+	</select>
+	<update id="user.updateBalance" parameterClass="java.util.Map">
+		update users set
+		balance=#balance# where id=#id#
+	</update>
+	<update id="user.updateLoginInfo" parameterClass="user">
+		update users
+		set
+		recentlyLoginTime=#recentlyLoginTime#,recentlyLoginIp=#recentlyLoginIp#
+		where id=#id#
+	</update>
+	<update id="user.updateUserPasswd" parameterClass="java.util.Map">
+		update users
+		set passwd=#passwd#
+		where name=#name#
+	</update>
+	<update id="user.updateUserInfo" parameterClass="user">
+		update users
+		set sclass=#sclass#,sno=#sno#,email=#email#
+		where id=#id#
+	</update>
+	<update id="user.updateUserAuthority" parameterClass="java.util.Map">
+		update authorities
+		set
+		authority = #authority#
+		where name=#name#
+	</update>
+	<delete id="user.deleteUser" parameterClass="long">
+		delete from users where
+		id = #id#
+	</delete>
+	<delete id="user.deleteAuthority" parameterClass="string">
+		delete from authorities where
+		name = #name#
+	</delete>
+	
+	<update id="user.enableUser">
+	  update users set enabled = 1 where id=#id#
+	</update>
+	<update id="user.disableUser">
+		 update users set enabled = 0 where id=#id#
+	</update>
+
+</sqlMap>

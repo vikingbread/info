@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="userpackage" extends="default" >
+	
+	<action name="userCheck" class="userAction" method="userCheck">
+	<result name="success" type="json">
+				<param name="includeProperties">success,errorMsg</param>
+	</result>
+	</action>
+	<action name="disableUser" class="userAction" method="disableUser">
+	<result name="success" type="json">
+				<param name="includeProperties">success,errorMsg</param>
+	</result>
+	</action>
+	<action name="enableUser" class="userAction" method="enableUser">  
+	<result name="success" type="json">
+				<param name="includeProperties">success,errorMsg</param>
+	</result>
+	</action>
+	<action name="getId" class="userAction" method="getId">  
+	<result name="success" type="json">
+				<param name="includeProperties">success,idNumber,errorMsg</param>
+	</result>
+	</action>
+	<action name="addUser" class="userAction" method="addUser">
+	<result name="success" type="json">
+				<param name="includeProperties">success,sucessMsg,errorMsg</param>
+	</result>
+	</action>
+	<action name="queryAllUsersByPage" class="userAction" method="queryAllUsersByPage">
+	<result name="success" >/admin/userList.jsp</result>
+	</action>
+	<action name="queryUserById" class="userAction" method="queryUserById">
+	<result name="success" >/admin/userInfo.jsp</result>
+	</action>
+	<action name="changePW0" class="userAction" method="changePW0">
+	<result name="success" >/user/changePW.jsp</result>   
+	</action>
+	<action name="changePW" class="userAction" method="changePW">
+	<result name="success" type="json">
+				<param name="includeProperties">success,errorMsg</param>
+	</result>
+	</action>
+	<action name="updateUser0" class="userAction" method="updateUser0">
+	<result name="success" >/admin/updateUser.jsp</result>
+	</action>
+	<action name="updateUser" class="userAction" method="updateUser">
+	<result name="success" type="json">
+				<param name="includeProperties">success,errorMsg</param>
+	</result>
+	</action>
+	<action name="queryBalance" class="userAction" method="queryBalance">
+	<result name="success" type="json">
+				<param name="includeProperties">success,user\.balance</param>
+	</result>
+	</action>
+	<action name="login" class="userAction" method="login">
+	<result name="success" >/welcome.jsp</result>
+	</action>
+	<action name="queryUserInfo" class="userAction" method="queryUserInfo"></action>
+	</package>
+</struts>
